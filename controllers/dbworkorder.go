@@ -498,13 +498,20 @@ func (this *DBWOController) Search() {
 	}
 	currPage, _ := strconv.ParseInt(page, 10, 64)
 	pageSize, _ := strconv.ParseInt(beego.AppConfig.String("pageSize"), 10, 64)
-	total, err := models.SearchDbwoCount(schema)
-	dbwos, err := models.SearchDbwo(int(currPage), int(pageSize), schema)
+	total, err := models.SearchDbwoCount(schema, dept.(string), uname.(string))
+	dbwos, err := models.SearchDbwo(int(currPage), int(pageSize), schema, dept.(string), uname.(string))
 	if err != nil {
 		beego.Error(err)
 	}
 	res := models.Paginator(int(currPage), int(pageSize), total)
+	var isViewItem bool
+	if dept.(string) == "研发" || dept.(string) == "运维" || dept.(string) == "测试" {
+		isViewItem = true
+	} else {
+		isViewItem = false
+	}
 
+	this.Data["IsViewItem"] = isViewItem
 	auth := role.(int64)
 	this.Data["Auth"] = auth
 	this.Data["Dept"] = dept.(string)

@@ -354,17 +354,28 @@ func DBApproveModify(id, schema, upgradeobj, upgradetype, comment, new_sqlfile, 
 	return err
 }
 
-func SearchDbwoCount(schema string) (int64, error) {
+func SearchDbwoCount(schema, dept, name string) (int64, error) {
 	o := orm.NewOrm()
+	var err error
+	var total int64
 	dbwos := make([]*Dbworkorder, 0)
-	total, err := o.QueryTable("dbworkorder").Filter("schemaname__icontains", schema).All(&dbwos)
+	if dept == "运维" {
+		total, err = o.QueryTable("dbworkorder").Filter("schemaname__icontains", schema).All(&dbwos)
+	} else {
+		total, err = o.QueryTable("dbworkorder").Filter("schemaname__icontains", schema).Filter("sponsor", name).All(&dbwos)
+	}
 	return total, err
 }
 
-func SearchDbwo(currPage, pageSize int, schema string) ([]*Dbworkorder, error) {
+func SearchDbwo(currPage, pageSize int, schema, dept, name string) ([]*Dbworkorder, error) {
 	o := orm.NewOrm()
+	var err error
 	dbwos := make([]*Dbworkorder, 0)
-	_, err := o.QueryTable("dbworkorder").Filter("schemaname__icontains", schema).OrderBy("-created").Limit(pageSize, (currPage-1)*pageSize).All(&dbwos)
+	if dept == "运维" {
+		_, err = o.QueryTable("dbworkorder").Filter("schemaname__icontains", schema).OrderBy("-created").Limit(pageSize, (currPage-1)*pageSize).All(&dbwos)
+	} else {
+		_, err = o.QueryTable("dbworkorder").Filter("schemaname__icontains", schema).Filter("sponsor", name).OrderBy("-created").Limit(pageSize, (currPage-1)*pageSize).All(&dbwos)
+	}
 	return dbwos, err
 }
 

@@ -45,7 +45,6 @@
                                 <th class="text-center">业务类型</th>                         
                                 <th class="text-center">发布类型</th>
                                 <th class="text-center">发起人</th>
-                                <th class="text-center">请求次数</th>
                                 <th class="text-center">测试</th>
                                 <th class="text-center">产品</th>
                                 <th class="text-center">运维</th>
@@ -66,7 +65,6 @@
                                 <td class="text-center">{{.Apptype}}</td>
                                 <td class="text-center">{{.Upgradetype}}</td>
                                 <td class="text-center">{{.Sponsor}}</td>
-                                <td class="text-center">{{.RequestCount}}</td>
                                 <td class="text-center">{{if eq (.Tester|len) 0}}无{{else}}{{.Tester}}{{end}}</td>
                                 <td class="text-center">{{if eq (.Approver|len) 0}}无{{else}}{{.Approver}}{{end}}</td>
                                 <td class="text-center">{{if eq (.Operater|len) 0}}无{{else}}{{.Operater}}{{end}}</td>
