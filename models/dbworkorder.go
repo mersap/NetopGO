@@ -81,6 +81,7 @@ func AddDBOrder(schema, upgradeobj, upgradetype, comment, step, sqlfile, sponsor
 	return err
 }
 
+/*
 func GetDBOrderCount(dept, sponsor string) (int64, error) {
 	var total int64
 	var err error
@@ -130,7 +131,44 @@ func GetDBOrders(currPage, pageSize int, dept, sponsor string) ([]*Dbworkorder, 
 	}
 	return dbwo, total, err
 }
+*/
+func GetDBOrderCount(dept, sponsor string) (int64, error) {
+	var total int64
+	var err error
+	o := orm.NewOrm()
+	dbwo := make([]*Dbworkorder, 0)
+	if "运维" == dept {
+		total, err = o.QueryTable("dbworkorder").All(&dbwo)
+		if err != nil {
+			return 0, err
+		}
+	} else {
+		total, err = o.Raw("select * from dbworkorder where sponsor=? ", sponsor).QueryRows(&dbwo)
+		if err != nil {
+			return 0, err
+		}
+	}
+	return total, err
+}
 
+func GetDBOrders(currPage, pageSize int, dept, sponsor string) ([]*Dbworkorder, int64, error) {
+	var total int64
+	var err error
+	o := orm.NewOrm()
+	dbwo := make([]*Dbworkorder, 0)
+	if "运维" == dept {
+		total, err = o.QueryTable("dbworkorder").OrderBy("-created").Limit(pageSize, (currPage-1)*pageSize).All(&dbwo)
+		if err != nil {
+			return nil, 0, err
+		}
+	} else {
+		total, err = o.Raw("select * from dbworkorder where sponsor=? limit ?,?", sponsor, (currPage-1)*pageSize, pageSize).QueryRows(&dbwo)
+		if err != nil {
+			return nil, 0, err
+		}
+	}
+	return dbwo, total, err
+}
 func GetDBwoById(id string) (*Dbworkorder, error) {
 	o := orm.NewOrm()
 	did, err := strconv.ParseInt(id, 10, 64)
