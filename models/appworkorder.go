@@ -53,6 +53,7 @@ type Appworkorder struct {
 	Isapproved   string `orm:size(50)`
 	Isedit       string `orm:size(5)`
 	RequestCount int64
+	ConfireTime	 string `orm:size(20)`
 	Created      string `orm:size(20)`
 }
 
@@ -197,6 +198,7 @@ func ApproveCommit(id, nextStatus, outcome, outcomevalue, who, uname string) err
 		appwo.Status = nextStatus
 		if who == "tester" {
 			appwo.Tester = uname
+			appwo.ConfireTime = time.Now().String()[:18]
 		} else if who == "approver" {
 			appwo.Approver = uname
 		} else if who == "finalchker" {
