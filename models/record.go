@@ -246,8 +246,11 @@ func GetFaultRecords(currPage, pageSize int, quest string) ([]*Faultrecord, int6
 
 func AddFaultRecord(question, level, system, appname, category, issolu, operater, starttime, endtime, solution, effection, analysis, nextstep string) error {
 	o := orm.NewOrm()
-	now := time.Now().String()
-	interNum := "IE" + now[:4] + now[5:7] + now[8:10] + now[11:13] + now[14:16] + now[17:19]
+	//now := time.Now().String()
+	//beego.Info(endtime);
+	interNum := "IE" + endtime[:4] + endtime[5:7] + endtime[8:10] + endtime[11:13] + endtime[14:16] + endtime[17:19]
+	//interNum := "IE" + now[:4] + now[5:7] + now[8:10] + now[11:13] + now[14:16] + now[17:19]
+	beego.Info(interNum);
 	record := &Faultrecord{
 		InterNum:  interNum,
 		Question:  question,
