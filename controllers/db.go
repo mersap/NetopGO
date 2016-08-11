@@ -112,14 +112,15 @@ func (this *DBController) Post() {
 	password := this.Input().Get("password")
 	port := this.Input().Get("port")
 	schema := this.Input().Get("schema")
+	idc := this.Input().Get("idc")
 	//beego.Info(password)
 	if len(id) > 0 {
-		err := models.ModifyDB(id, name, uuid, comment, size, roleType, user, password, port, schema)
+		err := models.ModifyDB(id, name, uuid, comment, size, roleType, user, password, port, schema, idc)
 		if err != nil {
 			beego.Error(err)
 		}
 	} else {
-		err := models.AddDB(name, uuid, comment, size, roleType, user, password, port, schema)
+		err := models.AddDB(name, uuid, comment, size, roleType, user, password, port, schema, idc)
 		if err != nil {
 			beego.Error(err)
 		}

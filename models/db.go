@@ -22,6 +22,7 @@ type Db struct {
 	Passwd     string `orm:size(50)`
 	Port       string `orm:size(10)`
 	Schemaname string `orm:size(20)`
+	Idc        string `orm:size(20)`
 	Created    time.Time
 }
 
@@ -86,7 +87,7 @@ func GetDBByName(name string) (*Db, error) {
 	return db, err
 }
 
-func AddDB(name, uuid, comment, size, role, user, password, port, schema string) error {
+func AddDB(name, uuid, comment, size, role, user, password, port, schema, idc string) error {
 	o := orm.NewOrm()
 	passwd, _ := AESEncode(password, AesKey)
 	//fmt.Printf("***add passwd:%v\n", passwd)
@@ -101,6 +102,7 @@ func AddDB(name, uuid, comment, size, role, user, password, port, schema string)
 		Passwd:     passwd,
 		Port:       port,
 		Schemaname: schema,
+		Idc:        idc,
 	}
 	err := o.QueryTable("db").Filter("name", name).One(db)
 	if err == nil {
@@ -110,7 +112,7 @@ func AddDB(name, uuid, comment, size, role, user, password, port, schema string)
 	return err
 }
 
-func ModifyDB(id, name, uuid, comment, size, role, user, password, port, schema string) error {
+func ModifyDB(id, name, uuid, comment, size, role, user, password, port, schema, idc string) error {
 	o := orm.NewOrm()
 
 	did, err := strconv.ParseInt(id, 10, 64)
@@ -130,6 +132,7 @@ func ModifyDB(id, name, uuid, comment, size, role, user, password, port, schema 
 		db.Passwd = passwd
 		db.Port = port
 		db.Schemaname = schema
+		db.Idc = idc
 	}
 	o.Update(db)
 	return err
