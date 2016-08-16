@@ -102,7 +102,7 @@ func GetUnoverOrderNums(auth int64, dept, uname string) (float64, int64, string,
 	var pageAuth int64
 	var pageDept string
 	if auth == 2 {
-		err = o.Raw("select count(*) from  dbworkorder where status=?", "正在实施").QueryRow(&num)
+		err = o.Raw("select count(*) from  appworkorder where db_status=? and status=?", "正在实施", "实施流程中").QueryRow(&num)
 		pageAuth = 2
 		pageDept = "运维"
 	} else if auth == 1 {

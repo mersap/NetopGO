@@ -66,7 +66,7 @@ func (this *MainController) Get() {
 	}
 	var orderFlag bool
 	if role.(int64) == 2 {
-		orderFlag = false
+		orderFlag = true
 	} else if role.(int64) == 1 {
 		orderFlag = true
 	} else if dept.(string) == "测试" {

@@ -13,20 +13,13 @@
             <span class="m-r-sm text-muted welcome-message">欢迎使用听云NetopGO系统</span>
         </li>
         <!--
-        <li class="dropdown">
-            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                 <span class="m-r-sm text-muted welcome-message">帮助</span>
-            </a>
-        </li>
+        {{if .IsViewOrder}}
+        <li role="presentation"><a href="{{if .OrderFlag}}/workorder/my/list?pageAuth={{.PageAuth}}&pageDept={{.PageDept}}{{else}}/workorder/mydb/list?pageAuth={{.PageAuth}}&pageDept={{.PageDept}}{{end}}"><span style="color:blue;">待您完成工单</span><span class="badge" style="color:red;">{{.UnoverOrderNums}}</span></a></li>
+        {{end}}
         -->
         {{if .IsViewOrder}}
         <li role="presentation"><a href="{{if .OrderFlag}}/workorder/my/list?pageAuth={{.PageAuth}}&pageDept={{.PageDept}}{{else}}/workorder/mydb/list?pageAuth={{.PageAuth}}&pageDept={{.PageDept}}{{end}}"><span style="color:blue;">待您完成工单</span><span class="badge" style="color:red;">{{.UnoverOrderNums}}</span></a></li>
         {{end}}
-        <!--
-        <button class="btn btn-primary" type="button">
-          流程工单 <span class="badge">4</span>
-        </button>
-        -->
         <li>
             <a href="/logout">
                 <i class="fa fa-sign-out"></i> Log out
