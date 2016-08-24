@@ -162,7 +162,7 @@ func GetDBOrders(currPage, pageSize int, dept, sponsor string) ([]*Dbworkorder, 
 			return nil, 0, err
 		}
 	} else {
-		total, err = o.Raw("select * from dbworkorder where sponsor=? limit ?,?", sponsor, (currPage-1)*pageSize, pageSize).QueryRows(&dbwo)
+		total, err = o.Raw("select * from dbworkorder where sponsor=? order by created desc limit ?,?", sponsor, (currPage-1)*pageSize, pageSize).QueryRows(&dbwo)
 		if err != nil {
 			return nil, 0, err
 		}

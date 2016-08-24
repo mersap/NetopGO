@@ -105,6 +105,7 @@ func (this *AppWOController) AppOrder() {
 	}
 	auth := role.(int64)
 	this.Data["Auth"] = auth
+	this.Data["Dept"] = dept.(string)
 	this.Data["IsViewItem"] = isViewItem
 	this.Data["Path1"] = "系统发布"
 	this.Data["Path2"] = "提交应用工单"

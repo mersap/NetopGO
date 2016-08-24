@@ -24,16 +24,28 @@
                                     </select>
                                 </div>
                             </div>
+                            {{if eq .Dept "运维"}}
+                            <div class="form-group">
+                                <label for="upgradetype" class="col-sm-2 control-label">升级类型<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <select name="upgradetype" class="form-control">
+                                        <option value="系统运维" selected>系统运维</option>
+                                        <option value="修复bug">修复bug</option>
+                                        <option value="产品发布">产品发布</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{else}}
                             <div class="form-group">
                                 <label for="upgradetype" class="col-sm-2 control-label">升级类型<span class="red-fonts">*</span></label>
                                 <div class="col-sm-8">
                                     <select name="upgradetype" class="form-control">
                                         <option value="修复bug" selected>修复bug</option>
                                         <option value="产品发布">产品发布</option>
-                                        <option value="系统运维">系统运维</option>
                                     </select>
                                 </div>
                             </div>
+                            {{end}}
                             <div class="form-group">
                                 <label for="version" class="col-sm-2 control-label">迭代版本<span class="red-fonts">*</span></label>
                                 <div class="col-sm-8">

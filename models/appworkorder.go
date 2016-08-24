@@ -53,7 +53,7 @@ type Appworkorder struct {
 	Isapproved   string `orm:size(50)`
 	Isedit       string `orm:size(5)`
 	RequestCount int64
-	ConfireTime	 string `orm:size(20)`
+	ConfireTime  string `orm:size(20)`
 	Created      string `orm:size(20)`
 }
 
@@ -233,6 +233,7 @@ func ApproveRollback(id, status, opoutcome, finaloutcome, operater string) error
 		appwo.OpOutcome = opoutcome
 		appwo.FinalOutcome = finaloutcome
 		appwo.Isedit = "true"
+		appwo.RequestCount = appwo.RequestCount + 1
 	}
 	o.Update(appwo)
 	return err
@@ -324,7 +325,7 @@ func ApproveModify(id, apptype, appname, upgradetype, version, jenkinsname, buil
 		appwo.Attachment = final_attachment
 		appwo.Sqlfile = final_sqlfile
 		appwo.Status = status
-		appwo.RequestCount = appwo.RequestCount + 1
+		//appwo.RequestCount = appwo.RequestCount + 1
 		appwo.TestOutcome = ""
 		appwo.PrdtOutcome = ""
 		appwo.OpOutcome = ""
